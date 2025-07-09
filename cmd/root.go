@@ -24,9 +24,16 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		w := 33 // validate weeks
+		// TODO: take week as argument!
+		w := 33
 		y := time.Now().Year()
-		weekRange := internal.CalculateWeek(w, y)
+		weekRange, err := internal.CalculateWeek(w, y)
+
+		if err != nil {
+			println(err)
+			return
+		}
+
 		println(weekRange.Start.Format(time.RFC3339))
 		println(weekRange.End.Format(time.RFC3339))
 		// TODO: check for those wonky years where there are 53 weeks (?)
